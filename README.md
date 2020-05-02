@@ -9,12 +9,14 @@ As my project is going to manipulate dataset with certain size, I ran some bench
 - read array element by predicate
 - modify array element by predicate
 
-The result is as below. It looks partial.lenses excels in read while optics-ts excels in write. Monocle-ts as a library is very mature in function and design and performance wise needs some tuning.
+The result is as below. It looks partial.lenses excels in read while optics-ts excels in write. Monocle-ts as a library is very mature in function and design. But it looks it needs some tuning for performance.
 
 If anyone, esp. the maintainers, think the benchmark code needs to be tuned to best use the library, you are welcome to raise an issue or pull request.
 
-And pull requests to add more test cases are welcome
+And pull requests to add more test cases are welcome.
 
+
+**Jest run result**
 
 ```
   read
