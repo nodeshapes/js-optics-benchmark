@@ -84,6 +84,22 @@ const data = {
 Test code for Jest
 
 ```
+import * as O from 'optics-ts'
+
+import { fromTraversable, Lens, Prism } from 'monocle-ts'
+import { some } from 'fp-ts/lib/Option'
+
+import * as L from 'partial.lenses'
+
+import { array } from 'fp-ts/lib/Array'
+
+
+const repeat = 1000 //50000
+
+const run = (fn: () => any) => {
+  for (let i = 0; i < repeat; i++) fn()
+}
+
 describe('read', () => {
   it('optics-ts', () => {
     const optics = O.optic<any>().path(['a', 'b', 'c', 'd', 'e'])
