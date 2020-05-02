@@ -38,11 +38,11 @@ const data = {
   },
 }
 
+const repeat = 1000 //50000
+
 const run = (fn: () => any) => {
   for (let i = 0; i < repeat; i++) fn()
 }
-
-const repeat = 1000 //50000
 
 describe('read', () => {
   it('optics-ts', () => {
@@ -70,7 +70,33 @@ describe('read', () => {
   })
 })
 
-describe('prism into array', () => {
+describe('write', () => {
+  it('optics-ts', () => {
+    const optics = O.optic<any>().path(['a', 'b', 'c', 'd', 'e'])
+    let r = undefined
+    const fn = () => (r = O.modify(optics)(() => 'world')(data))
+    run(fn)
+    expect(O.get(optics)(r)).toEqual('world')
+  })
+
+  it('monocle-ts', () => {
+    const optics = Lens.fromPath<any>()(['a', 'b', 'c', 'd', 'e'])
+    let r = undefined
+    const fn = () => (r = optics.modify(() => 'world')(data))
+    run(fn)
+    expect(optics.get(r)).toEqual('world')
+  })
+
+  it('partial.lenses', () => {
+    const optics = L.compose(['a', 'b', 'c', 'd', 'e'])
+    let r = undefined
+    const fn = () => (r = L.set(optics, 'world', data))
+    run(fn)
+    expect(L.get(optics, r)).toEqual('world')
+  })
+})
+
+describe('prism read array element by predicate', () => {
   it('optics-ts', () => {
     const optics = O.optic<any>()
       .path(['m', 'n', 'names'])
@@ -98,7 +124,7 @@ describe('prism into array', () => {
     expect(r).toEqual(some({ id, name }))
   })
 
-  it('partial.lens', () => {
+  it('partial.lenses', () => {
     const optics = L.compose(
       L.prop('m'),
       L.prop('n'),
@@ -111,10 +137,9 @@ describe('prism into array', () => {
     run(fn)
     expect(r).toEqual({ id, name })
   })
-
 })
 
-describe('prism modify array', () => {
+describe('prism modify array element by predicate', () => {
   it('optics-ts', () => {
     const optics = O.optic<any>()
       .path(['m', 'n', 'names'])
@@ -147,7 +172,7 @@ describe('prism modify array', () => {
     expect(w).toEqual(some({ id, name: nameModified }))
   })
 
-  it('partial.lens', () => {
+  it('partial.lenses', () => {
     const optics = L.compose(
       L.prop('m'),
       L.prop('n'),
@@ -162,5 +187,4 @@ describe('prism modify array', () => {
     let w = L.get(optics, r)
     expect(w).toEqual({ id, name: nameModified })
   })
-
 })
