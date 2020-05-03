@@ -162,7 +162,7 @@ describe('prism modify array element by predicate', () => {
     expect(w).toEqual({ id, name: nameModified })
   })
 
-  it.skip('monocle-ts', () => {
+  it('monocle-ts', () => {
     const getChildPrism = (id: string) =>
       Prism.fromPredicate((child: any) => child.id === id)
     const childTraversal = fromTraversable(array)<any>()
