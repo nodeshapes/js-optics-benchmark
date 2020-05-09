@@ -15,6 +15,28 @@ If anyone, esp. the maintainers, think the benchmark code needs to be tuned to b
 
 And pull requests to add more test cases are welcome.
 
+**Jest run result on May 9, 2020, with optics-ts version 1.1.3-pre3**
+
+See 40% improvement in array read with `find`.
+
+```
+  read
+    ✓ optics-ts (4ms)
+    ✓ monocle-ts (1ms)
+    ✓ partial.lenses (3ms)
+  write
+    ✓ optics-ts (4ms)
+    ✓ monocle-ts (7ms)
+    ✓ partial.lenses (14ms)
+  prism read array element by predicate
+    ✓ optics-ts (39ms)
+    ✓ monocle-ts (218ms)
+    ✓ partial.lenses (5ms)
+  prism modify array element by predicate
+    ✓ optics-ts (45ms)
+    ✓ monocle-ts (29993ms)
+    ✓ partial.lenses (360ms)
+```
 
 **Jest run result**
 
