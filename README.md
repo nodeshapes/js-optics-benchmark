@@ -17,7 +17,7 @@ And pull requests to add more test cases are welcome.
 
 **Jest run result on May 9, 2020, with optics-ts version 1.1.3-pre3**
 
-See 40% improvement in array read with `find`.
+See huge improvement in prsim array read / write with `find`.
 
 ```
   read
