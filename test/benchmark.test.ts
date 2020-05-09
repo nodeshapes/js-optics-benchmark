@@ -145,8 +145,8 @@ describe('prism modify array element by predicate', () => {
     const optics = O.optic<any>()
       .path(['m', 'n', 'names'])
       .find((name: any) => name.id === id)
-      // .elems()
-      // .when((name: any) => name.id === id)
+    // .elems()
+    // .when((name: any) => name.id === id)
     let r = undefined
     const fn = () =>
       (r = O.modify(optics)((s: any) => ({ ...s, name: nameModified }))(data))
@@ -167,7 +167,7 @@ describe('prism modify array element by predicate', () => {
 
     let r = undefined
     const fn = () =>
-      (r = optics.modify((s) => ({ ...s, name: nameModified }))(data))
+      (r = optics.modify(s => ({ ...s, name: nameModified }))(data))
     run(fn)
     let w = optics.asFold().headOption(r)
 
