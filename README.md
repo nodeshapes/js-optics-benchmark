@@ -15,6 +15,13 @@ If anyone, esp. the maintainers, think the benchmark code needs to be tuned to b
 
 And pull requests to add more test cases are welcome.
 
+
+```
+git clone https://github.com/nodeshapes/js-optics-benchmark.git
+yarn install
+yarn test --verbose
+```
+
 **Jest run result on May 9, 2020, with optics-ts version 1.1.3-pre3**
 
 See huge improvement in prsim array read / write with `find`.
