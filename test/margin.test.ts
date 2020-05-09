@@ -12,7 +12,7 @@ const test1: Test = {
 }
 
 describe('optics-ts', () => {
-  it('remove', () => {
+  it('remove (intended to fail)', () => {
     const lens: any = O.optic<Test>().path(['children', 's1'])
     const _test1 = O.remove<Test>(lens)(test1)
 
