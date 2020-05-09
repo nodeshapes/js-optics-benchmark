@@ -41,7 +41,7 @@
   "dependencies": {
     "fp-ts": "^2.5.4",
     "monocle-ts": "^2.1.0",
-    "optics-ts": "^1.1.0",
+    "optics-ts": "optics-ts@next",
     "partial.lenses": "^14.17.0",
     "ramda": "^0.27.0",
     "shades": "^2.1.0"

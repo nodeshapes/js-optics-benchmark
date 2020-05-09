@@ -13,8 +13,13 @@ const id = 'id-' + mid
 const name = 'Luke-' + mid
 const nameModified = 'Luke-' + mid + '-modified'
 
+interface User {
+  id: string
+  name: string
+}
+
 const makeNames = () => {
-  const arr = []
+  const arr: User[] = []
   for (let i = 0; i < size; i++)
     arr.push({
       id: 'id-' + i,
@@ -46,19 +51,19 @@ const run = (fn: () => any) => {
 
 describe('read', () => {
   it('optics-ts', () => {
-    const optics = O.optic<any>().path(['a', 'b', 'c', 'd', 'e'])
-    let r = undefined
+    const optics = O.optic<typeof data>().path(['a', 'b', 'c', 'd', 'e'])
+    let r: string
     const fn = () => (r = O.get(optics)(data))
     run(fn)
-    expect(r).toEqual('hello')
+    expect(r!).toEqual('hello')
   })
 
   it('monocle-ts', () => {
-    const optics = Lens.fromPath<any>()(['a', 'b', 'c', 'd', 'e'])
-    let r = undefined
+    const optics = Lens.fromPath<typeof data>()(['a', 'b', 'c', 'd', 'e'])
+    let r: string
     const fn = () => (r = optics.get(data))
     run(fn)
-    expect(r).toEqual('hello')
+    expect(r!).toEqual('hello')
   })
 
   it('partial.lenses', () => {
@@ -72,19 +77,19 @@ describe('read', () => {
 
 describe('write', () => {
   it('optics-ts', () => {
-    const optics = O.optic<any>().path(['a', 'b', 'c', 'd', 'e'])
-    let r = undefined
-    const fn = () => (r = O.modify(optics)(() => 'world')(data))
+    const optics = O.optic<typeof data>().path(['a', 'b', 'c', 'd', 'e'])
+    let r: typeof data
+    const fn = () => (r = O.set(optics)('world')(data))
     run(fn)
-    expect(O.get(optics)(r)).toEqual('world')
+    expect(O.get(optics)(r!)).toEqual('world')
   })
 
   it('monocle-ts', () => {
-    const optics = Lens.fromPath<any>()(['a', 'b', 'c', 'd', 'e'])
-    let r = undefined
-    const fn = () => (r = optics.modify(() => 'world')(data))
+    const optics = Lens.fromPath<typeof data>()(['a', 'b', 'c', 'd', 'e'])
+    let r: typeof data
+    const fn = () => (r = optics.set('world')(data))
     run(fn)
-    expect(optics.get(r)).toEqual('world')
+    expect(optics.get(r!)).toEqual('world')
   })
 
   it('partial.lenses', () => {
@@ -98,12 +103,12 @@ describe('write', () => {
 
 describe('prism read array element by predicate', () => {
   it('optics-ts', () => {
-    const optics = O.optic<any>()
+    const optics = O.optic<typeof data>()
       .path(['m', 'n', 'names'])
-      .find((name: any) => name.id === id)
+      .find(name => name.id === id)
     // .elems()
-    // .when((name: any) => name.id === id)
-    let r = undefined
+    // .when(name => name.id === id)
+    let r: User | undefined
     const fn = () => (r = O.preview(optics)(data))
     run(fn)
     expect(r).toEqual({ id, name })
@@ -142,17 +147,18 @@ describe('prism read array element by predicate', () => {
 
 describe('prism modify array element by predicate', () => {
   it('optics-ts', () => {
-    const optics = O.optic<any>()
+    const optic1 = O.optic<typeof data>()
       .path(['m', 'n', 'names'])
-      .find((name: any) => name.id === id)
+      .find(name => name.id === id)
     // .elems()
-    // .when((name: any) => name.id === id)
-    let r = undefined
-    const fn = () =>
-      (r = O.modify(optics)((s: any) => ({ ...s, name: nameModified }))(data))
+    // .when(name => name.id === id)
+    const optic2 = optic1.prop('name')
+
+    let r: typeof data
+    const fn = () => (r = O.set(optic2)(nameModified)(data))
     run(fn)
 
-    let w = O.preview(optics)(r)
+    const w = O.preview(optic1)(r!)
     expect(w).toEqual({ id, name: nameModified })
   })
 
