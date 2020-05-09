@@ -24,7 +24,7 @@ yarn test --verbose
 
 **Jest run result on May 9, 2020, with optics-ts version 1.1.3-pre3**
 
-See huge improvement in prsim array read / write with `find`.
+See huge improvement of **optics-ts** in prsim array read / write with `find`.
 
 ```
   read
